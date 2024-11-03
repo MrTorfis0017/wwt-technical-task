@@ -3,16 +3,13 @@ import { create } from 'zustand'
 import { SearchRequestFilter } from '@api/types/SearchRequest/SearchRequestFilter.ts'
 
 type Store = {
-	filtersData: SearchRequestFilter[]
-	setFiltersData: (data: SearchRequestFilter[]) => void
+	filtersData: SearchRequestFilter
+	setFiltersData: (filterItems: SearchRequestFilter) => void
 }
 
-const useFiltersStore = create<Store>(set => ({
+const useFilterStore = create<Store>(set => ({
 	filtersData: [],
-	setFiltersData: (data: SearchRequestFilter[]) =>
-		set(state => ({
-			filtersData: { ...state.filtersData, data }
-		}))
+	setFiltersData: (data: SearchRequestFilter) => set({ filtersData: data })
 }))
 
-export default useFiltersStore
+export default useFilterStore

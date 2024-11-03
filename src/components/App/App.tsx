@@ -6,24 +6,21 @@ import { QueryClientProvider, useQuery } from '@tanstack/react-query'
 
 import { queryClient } from '@/query.ts'
 import FilterModal from '@components/FilterModal/FilterModal.tsx'
-import useFiltersStore from '@store/store.tsx'
+import useFilterStore from '@store/store.tsx'
 
 export const App = () => {
 	const { t } = useTranslation()
 	const { isOpen, onOpen, onClose } = useDisclosure()
-	const { filtersData, setFiltersData } = useFiltersStore()
+	const { setFiltersData } = useFilterStore()
 	const { isLoading, error, data } = useQuery({
 		queryKey: ['findFilters'],
 		queryFn: () => fetch('/filterData.json').then(res => res.json())
 	})
-
 	useEffect(() => {
 		if (data) {
-			setFiltersData(data)
+			setFiltersData(data.filterItems)
 		}
 	}, [data])
-
-	console.log(filtersData)
 
 	if (isLoading) {
 		return <div>{t('Fetching')}</div>
