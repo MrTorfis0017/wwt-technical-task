@@ -4,12 +4,18 @@ import { SearchRequestFilter } from '@api/types/SearchRequest/SearchRequestFilte
 
 type Store = {
 	filtersData: SearchRequestFilter
+	setSelectedFilters: (filterIds: string[]) => void
 	setFiltersData: (filterItems: SearchRequestFilter) => void
+	selectedFilters: string[]
 }
 
 const useFilterStore = create<Store>(set => ({
 	filtersData: [],
-	setFiltersData: (data: SearchRequestFilter) => set({ filtersData: data })
+	selectedFilters: [],
+	setSelectedFilters: (filterIds: string[]) =>
+		set({ selectedFilters: filterIds }),
+	setFiltersData: (filterItems: SearchRequestFilter) =>
+		set({ filtersData: filterItems })
 }))
 
 export default useFilterStore
