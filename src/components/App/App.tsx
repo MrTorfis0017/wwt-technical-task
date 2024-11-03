@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Box, Button, useDisclosure } from '@chakra-ui/react'
+import { Box, Button, Text, useDisclosure } from '@chakra-ui/react'
 import { QueryClientProvider, useQuery } from '@tanstack/react-query'
 
 import { queryClient } from '@/query.ts'
@@ -11,7 +11,7 @@ import useFilterStore from '@store/store.tsx'
 export const App = () => {
 	const { t } = useTranslation()
 	const { isOpen, onOpen, onClose } = useDisclosure()
-	const { setFiltersData } = useFilterStore()
+	const { selectedFilters, setFiltersData } = useFilterStore()
 	const { isLoading, error, data } = useQuery({
 		queryKey: ['findFilters'],
 		queryFn: () => fetch('/filterData.json').then(res => res.json())
@@ -45,6 +45,9 @@ export const App = () => {
 					isOpen={isOpen}
 					onClose={onClose}
 				/>
+				{selectedFilters.map((item: string) => (
+					<Text key={item}>{item}</Text>
+				))}
 			</Box>
 		</QueryClientProvider>
 	)
